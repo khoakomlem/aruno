@@ -15,6 +15,7 @@ const int ss4=4;
 const int ss5=5;
 const int DARK=0;  // dark color (not the led is light out)
 const int LIGHT=1; // light color (not the led is light up)
+int count = 0;
 
 void setup() {
   pinMode(motorFL, OUTPUT);
@@ -53,6 +54,7 @@ void loop() {
        )) {
       sFLeft = MOTORSTOP;
       sFRight = MOTORSPEED;
+      sBLeft = MOTORSPEED / 2;
     }
     
     if (( // queo trai
@@ -62,6 +64,7 @@ void loop() {
        )) {
       sFLeft = MOTORSPEED;
       sFRight = MOTORSTOP;
+      sBRight = MOTORSPEED / 2;
     }
 
 //    if ((rs3 == DARK) && (rs1 == rs2) && (rs2 == rs4) && (rs4 == rs5) && (rs1 == LIGHT)) {
@@ -69,10 +72,16 @@ void loop() {
 //      sRight = MOTORSPEED;
 //    }
     if ((rs1 == rs2) && (rs2 == rs3) && (rs3 == rs4) && (rs4 == rs5) && (rs1 == LIGHT)) {
-      sFLeft = MOTORSTOP;
-      sFRight = MOTORSTOP;
-      sBLeft = MOTORSPEED/3;
-      sBRight = MOTORSPEED/3;
+      if (count >= 5) {
+        sFLeft = MOTORSTOP;
+        sFRight = MOTORSTOP;
+        sBLeft = MOTORSPEED/2;
+        sBRight = MOTORSPEED/2;
+      }
+      count++;
+      if (count > 20) count = -count;
+    } else {
+      count = 0;
     }
   } else {
     sFLeft = MOTORSTOP;
